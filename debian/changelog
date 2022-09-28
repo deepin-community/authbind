@@ -1,0 +1,183 @@
+authbind (2.1.2) unstable; urgency=medium
+
+  * Cope with programs which set SIGCHLD to SIG_IGN.  (We assume
+    they don't manipulate SIGCHLD on other threads, which is probably
+    true.)  Patch from Marco d'Itri, slightly modified.  Closes:#765587.
+  * Fix one-letter typo in previous changelog entry.
+  * Add -n to gzip -9 rune, to help reproducibility.  Closes:#777727.
+  * Fix FTCBFS: Use triplet-prefixed build tools.
+    Patch from Helmut Grohne, modified.  Closes: #851206.
+
+ -- Ian Jackson <ijackson@chiark.greenend.org.uk>  Sun, 22 Jan 2017 13:17:55 +0000
+
+authbind (2.1.1+nmu1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix mtimes before building binary packages to produce reproducible output
+    Based on patch by akira (Closes: #792945)
+
+ -- Johannes Schauer <josch@debian.org>  Sun, 26 Jul 2015 11:23:35 +0200
+
+authbind (2.1.1) unstable; urgency=low
+
+  * Manpage has an example of which files will be checked and read
+    Closes: #676540.
+  * Do not include library version number in usage output from helper; the
+    library and package version numbers are not the same, so this is
+    misleading, and we do not want to introduce new machinery just to
+    plumb the package version number through.  Closes: #676440.
+  * Another minor wording fix in the manpage.
+
+ -- Ian Jackson <ijackson@chiark.greenend.org.uk>  Sun, 10 Jun 2012 23:17:14 +0100
+
+authbind (2.1.0) unstable; urgency=low
+
+  * Permissions file lines can contain IPv6 mask/length.
+  * Permissions file lines need only contain one port number.
+  * Manpage improvements.
+
+ -- Ian Jackson <ijackson@chiark.greenend.org.uk>  Sun, 03 Jun 2012 12:33:53 +0100
+
+authbind (2.0.1) unstable; urgency=low
+
+  Bugfix:
+  * 0-length ipv4 address masks (ie, 0.0.0.0/0) in byuid files wouldn't
+    work because they would attempt a 32-bit shift.  This was reported
+    against Ubuntu in Launchpad but the but is here too.  LP: #514278.
+
+ -- Ian Jackson <ijackson@chiark.greenend.org.uk>  Sun, 03 Jun 2012 01:50:13 +0100
+
+authbind (2.0.0) unstable; urgency=medium
+
+  Important new functionality:
+  * Support IPv6.  (Closes: #596921.)
+  * Support ports 512-1023 if the user really wants.
+    Explain the problem more clearly in the manpage.  (Closes: 654706.)
+
+  Bugfixes:
+  * Correct manpage description of helper protocol to have
+    actually-implemented byte order convention.  (Closes: #651694.)
+  * Improve wording in BUGS section of manpage about forking.
+
+  Packaging fixes:
+  * Remove shlibs files.  These are not needed because nothing should
+    actually link to libauthbind.
+  * Update Standards-Version.
+  * Upstream repo is now in git.
+  * Change my email address.
+  * Set Priority to optional as in ftpmaster override file.
+
+ -- Ian Jackson <ijackson@chiark.greenend.org.uk>  Sat, 02 Jun 2012 01:56:37 +0100
+
+authbind (1.2.0) unstable; urgency=low
+
+  * Block signals during our child's execution.  Closes: #186439.
+  * manpage: fix subtle error in description of interaction between
+    set-id and LD_PRELOAD.  Closes: #36890.
+  * Say in manpage that we may not work properly with multithreaded
+    programs.  See also Bug#186439.
+  * Make sure we don't try to encode errno's >127 in a status code.
+  * New make variables for improved portability and customisation of
+    locations: LIBS, libexec_dir, HELPER, BINTARGETS.
+  * make clean removes *.core too.
+  * #include <signal.h> in libauthbind.c.
+  * Set SHELL=/bin/bash in debian/rules.  Closes: #374586.
+  * Revert Amaya's accidental change to CC= line in debian/rules.
+  * Debian-native again.  Closes: #393556.
+  * Do not strip if DEB_BUILD_OPTIONS=nostrip (Closes: #436489):
+    - in Makefile, do not set INSTALL_* or STRIP if already set
+    - in rules, export STRIP=: if nostrip
+  * Change my email address in Maintainer: to davenant.
+    
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 23 Sep 2007 20:23:50 +0100
+
+authbind (1.1.5.2-0.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Get rid of the /usr/doc link (Closes: #359363).
+  * Revamped packaging a bit:
+    - Get rid of Build-Depends on libc6-dev (build-essential)
+    - spelling-error-in-copyright Debian/GNU Linux Debian GNU/Linux
+    - Not debian-native anymore
+    - Updated ancient-standards-version to 3.7.2, no changes needed.
+
+ -- Amaya Rodrigo Sastre <amaya@debian.org>  Wed, 12 Jul 2006 12:28:12 +0200
+
+authbind (1.1.5.2-0.1) unstable; urgency=low
+
+  * Non-maintainer Upload
+  * Moved man pages to /usr/share/man and docs to
+    /usr/share/doc/authbind. Added a prerm and a postinst script to set
+    the /usr/doc/authbind link. (closes: #91112, #91376, #91387)
+  * Fixed the path to the common licenses in debian/copyright
+  * Added a section and priority field to the changelog
+  * Added support for the `nostrip' and `debug' options in
+    DEB_BUILD_OPTIONS.
+  * Boosted Standards-Version to 3.5.2
+
+ -- Bas Zoetekouw <bas@debian.org>  Sun, 13 May 2001 18:00:52 +0200
+
+authbind (1.1.5.2) frozen unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Makefile: Add -D_GNU_SOURCE, closes: 89944
+
+ -- Stephen Frost <sfrost@debian.org>  Fri, 16 Mar 2001 19:42:05 -0500
+
+authbind (1.1.5.1) frozen unstable; urgency=low
+
+  * Non-maintainer upload.
+  * debian/rules (clean): use tab not spaces, so `debian/rules clean'
+    actually works. [#27360]
+  * debian/rules (binary-arch): don't compress the copyright file.
+  * Makefile: install the shared library non-executable.
+ 
+ -- James Troup <james@nocrew.org>  Sun,  3 Jan 1999 21:23:50 +0000
+
+authbind (1.1.5) unstable; urgency=low
+
+  * Fix coredump bug !
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Mon, 31 Aug 1998 15:32:44 +0100
+
+authbind (1.1.4) unstable; urgency=low
+
+  * Allow bind() to port 0 !
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Mon, 31 Aug 1998 15:23:30 +0100
+
+authbind (1.1.3) unstable; urgency=low
+
+  * Make IPPORT_RESERVED check work (oops!).
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 30 Aug 1998 20:52:10 +0100
+
+authbind (1.1.2) unstable; urgency=low
+
+  * Make --deep option actually work (oops).
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 30 Aug 1998 20:09:39 +0100
+
+authbind (1.1.1) unstable; urgency=low
+
+  * Fix Description.
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 30 Aug 1998 16:34:28 +0100
+
+authbind (1.1) experimental; urgency=low
+
+  * Allow control of when the LD_PRELOAD is passed on.
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 30 Aug 1998 16:18:24 +0100
+
+authbind (1.0) experimental; urgency=low
+
+  * Following testing, we can call this 1.0.
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sun, 30 Aug 1998 03:15:21 +0100
+
+authbind (0.1-1) experimental; urgency=low
+
+  * Initial release.
+
+ -- Ian Jackson <ian@davenant.greenend.org.uk>  Sat, 29 Aug 1998 20:10:37 +0100

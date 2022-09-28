@@ -1,0 +1,12 @@
+Source: authbind
+Section: utils
+Priority: optional
+Maintainer: Ian Jackson <ijackson@chiark.greenend.org.uk>
+Standards-Version: 3.9.1
+
+Package: authbind
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Allows non-root programs to bind() to low ports
+ This package allows a package to be started as non-root but
+ still bind to low ports, without any changes to the application.
