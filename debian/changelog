@@ -1,4 +1,4 @@
-authbind (2.1.2) unstable; urgency=medium
+authbind (2.1.3) unstable; urgency=medium
 
   * Cope with programs which set SIGCHLD to SIG_IGN.  (We assume
     they don't manipulate SIGCHLD on other threads, which is probably
